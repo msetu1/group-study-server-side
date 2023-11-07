@@ -46,12 +46,12 @@ async function run() {
             res.send(result)
         })
 
-        // app.post('/allasignment', async (req, res) => {
-        //     const allasignment = req.body
-        //     console.log(allasignment);
-        //     const result = await allAssignmentCollection.insertOne(allasignment)
-        //     res.send(result)
-        // })
+        app.post('/allasignment', async (req, res) => {
+            const allasignment = req.body
+            console.log(allasignment);
+            const result = await allAssignmentCollection.insertOne(allasignment)
+            res.send(result)
+        })
 
         // view assignment 
         // app.get('/allasignment/:id', async (req, res) => {
