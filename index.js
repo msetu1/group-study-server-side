@@ -40,11 +40,11 @@ async function run() {
 
 
         // all asiignment
-        // app.get('/allasignment', async (req, res) => {
-        //     const cursor = req.body;
-        //     const result = await allAssignmentCollection.find(cursor).toArray()
-        //     res.send(result)
-        // })
+        app.get('/allasignment', async (req, res) => {
+            const cursor = req.body;
+            const result = await allAssignmentCollection.find(cursor).toArray()
+            res.send(result)
+        })
 
         // app.post('/allasignment', async (req, res) => {
         //     const allasignment = req.body
