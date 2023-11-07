@@ -78,25 +78,25 @@ async function run() {
             res.send(result)
         })
 
-        // app.put('/allasignment/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: new ObjectId(id) }
-        //     const options = { upsert: true };
-        //     const updateAssignment = req.body;
-        //     const updateDoc = {
-        //         $set: {
-        //             level: updateAssignment.level,
-        //             // _id: updateAssignment._isad,
-        //             description: updateAssignment.description,
-        //             title: updateAssignment.title,
-        //             date: updateAssignment.date,
-        //             image: updateAssignment.image,
-        //             marks: updateAssignment.marks
-        //         },
-        //     };
-        //     const result = await allAssignmentCollection.updateOne(query, updateDoc,options)
-        //     res.send(result)
-        // })
+        app.put('/allasignment/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const updateAssignment = req.body;
+            const updateDoc = {
+                $set: {
+                    level: updateAssignment.level,
+                    // _id: updateAssignment._isad,
+                    description: updateAssignment.description,
+                    title: updateAssignment.title,
+                    date: updateAssignment.date,
+                    image: updateAssignment.image,
+                    marks: updateAssignment.marks
+                },
+            };
+            const result = await allAssignmentCollection.updateOne(query, updateDoc,options)
+            res.send(result)
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
