@@ -54,12 +54,12 @@ async function run() {
         })
 
         // view assignment 
-        // app.get('/allasignment/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: new ObjectId(id) }
-        //     const result = await allAssignmentCollection.findOne(query)
-        //     res.send(result)
-        // })
+        app.get('/allasignment/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await allAssignmentCollection.findOne(query)
+            res.send(result)
+        })
 
         // deleted
         // app.delete('/allasignment/:id', async (req, res) => {
