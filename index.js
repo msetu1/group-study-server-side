@@ -30,6 +30,8 @@ async function run() {
         // collection 
         const featureCollection = client.db('groupStudy').collection('feature')
         const allAssignmentCollection = client.db('groupStudy').collection('allasignment')
+        const submmitedCollection = client.db('groupStudy').collection('submittedAssignment')
+        const myAssignmentCollection = client.db('groupStudy').collection('myAssignment')
 
         // feature get 
         app.get('/feature', async (req, res) => {
@@ -38,6 +40,27 @@ async function run() {
             res.send(result);
         })
 
+        // submitted assignment 
+        app.post('/submittedAssignment',async(req,res)=>{
+            const newSumitted =req.body;
+            console.log(newSumitted);
+            const result =await submmitedCollection.insertOne(newSumitted);
+            res.send(result)
+        })
+
+        app.get("/submittedAssignment/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const user = await submmitedCollection.findOne(query);
+            res.send(user);
+          });
+
+        // submitted 
+        app.get("/submittedAssignment", async (req, res) => {
+            const cursor =submmitedCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+          });
 
         // all asiignment
         app.get('/allasignment', async (req, res) => {
@@ -68,8 +91,6 @@ async function run() {
             const result = await allAssignmentCollection.deleteOne(query)
             res.send(result)
         })
-
-
         // update 
         app.get('/allasignment/:id', async (req, res) => {
             const id = req.params.id;
@@ -86,7 +107,6 @@ async function run() {
             const updateDoc = {
                 $set: {
                     level: updateAssignment.level,
-                    // _id: updateAssignment._isad,
                     description: updateAssignment.description,
                     title: updateAssignment.title,
                     date: updateAssignment.date,
@@ -94,9 +114,30 @@ async function run() {
                     marks: updateAssignment.marks
                 },
             };
-            const result = await allAssignmentCollection.updateOne(query, updateDoc,options)
+            const result = await allAssignmentCollection.updateOne(query, updateDoc, options)
             res.send(result)
         })
+
+        // my assignment 
+        app.get('/myAssignment',async(req,res)=>{
+            const cursor =myAssignmentCollection.find()
+            const result =await cursor.toArray()
+            res.send(result)
+        })
+        app.post('/myAssignment',async(req, res)=>{
+            const newMyAssignment=req.body;
+            const result =await myAssignmentCollection.insertOne(newMyAssignment)
+            res.send(result)
+          })
+
+
+          app.get("/myAssignment/:email", async (req, res) => {
+            const email = req.params.email;
+            const cursor = myAssignmentCollection.find({ email: email });
+            const result = await cursor.toArray();
+            res.send(result);
+          });
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
